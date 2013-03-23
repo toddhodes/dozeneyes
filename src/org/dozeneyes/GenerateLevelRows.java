@@ -23,16 +23,16 @@ public class GenerateLevelRows {
 
   protected static final int FONT_SIZE = 14;
 
-  private WritableCellFormat timesBold;
-  private WritableCellFormat times;
-  private String inputFile;
+  private WritableCellFormat cellFormat;
+  private WritableCellFormat cellFormatBold;
+  private String outputFile;
 
-  public void setOutputFile(String inputFile) {
-     this.inputFile = inputFile;
+  public void setOutputFile(String outputFile) {
+     this.outputFile = outputFile;
   }
 
   public void write() throws IOException, WriteException {
-    File file = new File(inputFile);
+    File file = new File(outputFile);
     WorkbookSettings wbSettings = new WorkbookSettings();
 
     wbSettings.setLocale(new Locale("en", "EN"));
@@ -51,19 +51,19 @@ public class GenerateLevelRows {
       throws WriteException {
 
     // cell format
-    WritableFont times10pt = new WritableFont(WritableFont.ARIAL, FONT_SIZE);
-    times = new WritableCellFormat(times10pt);
-    times.setWrap(true);
+    WritableFont cellFont = new WritableFont(WritableFont.ARIAL, FONT_SIZE);
+    cellFormat = new WritableCellFormat(cellFont);
+    cellFormat.setWrap(true);
 
     // header
     WritableFont headerFont =
        new WritableFont(WritableFont.ARIAL, FONT_SIZE, WritableFont.BOLD, false);
-    timesBold = new WritableCellFormat(headerFont);
-    timesBold.setWrap(true);
+    cellFormatBold = new WritableCellFormat(headerFont);
+    cellFormatBold.setWrap(true);
 
     CellView cv = new CellView();
-    cv.setFormat(times);
-    cv.setFormat(timesBold);
+    cv.setFormat(cellFormat);
+    cv.setFormat(cellFormatBold);
     cv.setAutosize(true);
 
     // headers
@@ -76,8 +76,9 @@ public class GenerateLevelRows {
 
   }
 
-  private void createContent(WritableSheet sheet) throws WriteException,
-      RowsExceededException {
+  private void createContent(WritableSheet sheet)
+          throws WriteException, RowsExceededException {
+
     for (int i = 1; i < 10; i++) {
       addNumber(sheet, 0, i, i + 10);
       addNumber(sheet, 1, i, i * i);
@@ -101,21 +102,21 @@ public class GenerateLevelRows {
   private void addCaption(WritableSheet sheet, int column, int row, String s)
       throws RowsExceededException, WriteException {
     Label label;
-    label = new Label(column, row, s, timesBold);
+    label = new Label(column, row, s, cellFormatBold);
     sheet.addCell(label);
   }
 
   private void addNumber(WritableSheet sheet, int column, int row,
       Integer integer) throws WriteException, RowsExceededException {
     Number number;
-    number = new Number(column, row, integer, times);
+    number = new Number(column, row, integer, cellFormat);
     sheet.addCell(number);
   }
 
   private void addLabel(WritableSheet sheet, int column, int row, String s)
       throws WriteException, RowsExceededException {
     Label label;
-    label = new Label(column, row, s, times);
+    label = new Label(column, row, s, cellFormat);
     sheet.addCell(label);
   }
 
