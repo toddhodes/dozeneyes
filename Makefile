@@ -1,6 +1,6 @@
 .PHONY: all, compile, run, open
 
-SRC := ./src/org/dozeneyes/GenerateLevelRows.java
+SRC := ./src/org/dozeneyes/*.java
 
 COMPILE_CP := lib/jexcelapi/jxl.jar 
 RUNTIME_CP := build:lib/jexcelapi/jxl.jar 

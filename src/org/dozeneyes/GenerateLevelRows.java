@@ -22,6 +22,7 @@ import jxl.write.biff.RowsExceededException;
 public class GenerateLevelRows {
 
   protected static final int FONT_SIZE = 14;
+  protected static Logger log = new Logger(GenerateLevelRows.class);
 
   private WritableCellFormat cellFormat;
   private WritableCellFormat cellFormatBold;
@@ -62,22 +63,20 @@ public class GenerateLevelRows {
     cellFormatBold.setWrap(true);
 
     CellView cv = new CellView();
+    cv.setAutosize(true);
     cv.setFormat(cellFormat);
     cv.setFormat(cellFormatBold);
-    cv.setAutosize(true);
-
-    // headers
-    String[] headers = {
-       "Level", "Orientation", "Color", "Pattern", "Sound", "Animation"
-    };
-    for (int i=0; i < headers.length; i++) {
-       addCaption(sheet, i, 0, headers[i]);
-    }
-
   }
 
   private void createContent(WritableSheet sheet)
           throws WriteException, RowsExceededException {
+
+    String[] headers = {
+       "Level", "Orientation", "Color", "Pattern", "Sound", "Animation"
+    };
+    for (int i=0; i < headers.length; i++) {
+       addHeader(sheet, i, 0, headers[i]);
+    }
 
     for (int i = 1; i < 10; i++) {
       addNumber(sheet, 0, i, i + 10);
@@ -99,27 +98,46 @@ public class GenerateLevelRows {
     }
   }
 
-  private void addCaption(WritableSheet sheet, int column, int row, String s)
-      throws RowsExceededException, WriteException {
+  private void addHeader(WritableSheet sheet, int column, int row, String s)
+          throws RowsExceededException, WriteException {
     Label label;
     label = new Label(column, row, s, cellFormatBold);
     sheet.addCell(label);
   }
 
-  private void addNumber(WritableSheet sheet, int column, int row,
-      Integer integer) throws WriteException, RowsExceededException {
-    Number number;
-    number = new Number(column, row, integer, cellFormat);
+  private void addNumber(WritableSheet sheet, int column, int row, Integer integer)
+          throws WriteException, RowsExceededException {
+    Number number = new Number(column, row, integer, cellFormat);
     sheet.addCell(number);
   }
 
   private void addLabel(WritableSheet sheet, int column, int row, String s)
-      throws WriteException, RowsExceededException {
-    Label label;
-    label = new Label(column, row, s, cellFormat);
+          throws WriteException, RowsExceededException {
+    Label label = new Label(column, row, s, cellFormat);
     sheet.addCell(label);
   }
 
+  protected void complexitySelector(int complexity) {
+     switch (complexity) {
+        case 1:
+         // 1 - randomly selects one state for all 4 aspects.
+
+        case 2:
+         // 2 - randomly selects three states for 1 aspect and one state for 3 aspect
+         //     (randomly picking which aspect to bestow 3 on)
+        case 3:
+         // 3 - randomly selects two states for 1 aspect  and two  states for 2 aspects.
+        case 4:
+         // 4 - randomly selects one state for 1 aspect and three states for 3 aspects.
+        case 5:
+         // 5 - randomly selects three states for all 4 aspects.
+        default:
+          log.e("bad complexity");
+     }
+  }
+
+  /**
+   */
   public static void main(String[] args) throws WriteException, IOException {
     GenerateLevelRows main = new GenerateLevelRows();
     String fn = "gen/levels.xls";
