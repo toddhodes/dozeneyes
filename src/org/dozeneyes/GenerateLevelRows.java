@@ -91,10 +91,10 @@ public class GenerateLevelRows {
 
      Orientation o = Orientation.LEFT;
 
-     Color c = Color.values()[random.nextInt(3)];
-     Pattern p = Pattern.values()[random.nextInt(3)];
-     Sound s = Sound.values()[random.nextInt(3)];
-     Animation a = Animation.values()[random.nextInt(3)];
+     Color c = Aspect.newColor();
+     Pattern p = Aspect.newPattern();
+     Sound s = Aspect.newSound();
+     Animation a = Aspect.newAnimation();
 
      // first row is completely random
      addLabel(sheet, 6, row, "complexity " + complexity);
@@ -109,20 +109,20 @@ public class GenerateLevelRows {
         case 5:
            // 5 - randomly selects three states for all 4 aspects.
            log.d("new color");
-           c = Color.values()[random.nextInt(3)];
+           c = Aspect.newColor();
         case 4:
            // 4 - randomly selects one state for 1 aspect and three states for 3 aspects.
            log.d("new pattern");
-           p = Pattern.values()[random.nextInt(3)];
+           p = Aspect.newPattern();
         case 3:
            // 3 - randomly selects two states for 1 aspect  and two  states for 2 aspects.
            log.d("new sound");
-           s = Sound.values()[random.nextInt(3)];
+           s = Aspect.newSound();
         case 2:
            // 2 - randomly selects three states for 1 aspect and one state for 3 aspect
            //     (randomly picking which aspect to bestow 3 on)
            log.d("new animation");
-           a = Animation.values()[random.nextInt(3)];
+           a = Aspect.newAnimation();
         case 1:
            // 1 - randomly selects one state for all 4 aspects.
            break;
