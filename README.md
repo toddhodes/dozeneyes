@@ -4,17 +4,17 @@ dozeneyes
 dozeneyes contributions
 
 
-== gamegen -- https://github.com/toddhodes/dozeneyes ==
+### gamegen -- https://github.com/toddhodes/dozeneyes 
 
 
-* to build:
+build:
 
 ```bash
  $ make 
 ```
 
 
-* to run and open the xls:
+run and open the xls:
 
 ```bash
  $ ./runMe 3: 1 2 2 3 3 4 4 5 5
@@ -22,9 +22,10 @@ dozeneyes contributions
 
  (or similar)
 
-* TODO:
-- randomize Orientation
-- CSV
-- investigate randomization quality
+TODO:
+
+  - randomize Orientation
+  - CSV
+  - investigate randomization quality
 
 
