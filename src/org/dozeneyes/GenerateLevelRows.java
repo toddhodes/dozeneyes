@@ -103,7 +103,7 @@ public class GenerateLevelRows {
      addLabel(sheet, 6, row, "complexity " + complexity);
      addRow(sheet, o, c, p, s, a);
 
-     // the, choose which aspects to further randomize
+     // then, choose which aspects to further randomize
      List<Boolean> isRandom =
         Arrays.asList(new Boolean[] { false, false, false, false });
      for (int i=0; i < 4; i++) {
