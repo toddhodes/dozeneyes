@@ -30,15 +30,14 @@ public class GenerateLevelRows {
   protected WritableCellFormat cellFormatBold;
   protected Random random = new Random();
 
+  private int row = 1;
 
   public GenerateLevelRows() { }
 
 
-  public void createWorkbook(String outputFile)
-         throws IOException, WriteException {
+  public void createWorkbook(String outputFile) throws IOException, WriteException {
     File file = new File(outputFile);
     WorkbookSettings wbSettings = new WorkbookSettings();
-
     wbSettings.setLocale(new Locale("en", "EN"));
 
     workbook = Workbook.createWorkbook(file, wbSettings);
@@ -48,20 +47,17 @@ public class GenerateLevelRows {
     createFormats(excelSheet);
   }
 
-  public void closeWorkbook()
-         throws IOException, WriteException {
+  public void closeWorkbook() throws IOException, WriteException {
     workbook.write();
     workbook.close();
   }
 
-  public void write(int complexity)
-         throws IOException, WriteException {
+  public void write(int complexity) throws IOException, WriteException {
     WritableSheet excelSheet = workbook.getSheet(0);
     complexitySelector(excelSheet, complexity);
   }
 
-  protected void createFormats(WritableSheet sheet)
-      throws WriteException {
+  protected void createFormats(WritableSheet sheet) throws WriteException {
 
     // cell format
     WritableFont cellFont = new WritableFont(WritableFont.ARIAL, FONT_SIZE);
@@ -89,7 +85,6 @@ public class GenerateLevelRows {
   }
 
 
-  // "Level", "Orientation", "Color", "Pattern", "Sound", "Animation"
   protected void complexitySelector(WritableSheet sheet, int complexity)
      throws WriteException, RowsExceededException {
 
@@ -101,6 +96,7 @@ public class GenerateLevelRows {
      Animation a = Animation.values()[random.nextInt(3)];
 
      // first row is completely random
+     addLabel(sheet, 6, row, "complexity " + complexity);
      addRow(sheet, o, c, p, s, a);
 
      // for rows two and three...
@@ -134,16 +130,16 @@ public class GenerateLevelRows {
 
   protected void addRow(WritableSheet sheet,
                         Orientation o, Color c, Pattern p, Sound s, Animation a)
-          throws WriteException, RowsExceededException {
-     int row = lvl;
-     addLabel(sheet, 0, row, "" + lvl++);
+     throws WriteException, RowsExceededException {
+
+     addLabel(sheet, 0, row, "[lvl#]");
      addLabel(sheet, 1, row, o.toString());
      addLabel(sheet, 2, row, c.toString());
      addLabel(sheet, 3, row, p.toString());
      addLabel(sheet, 4, row, s.toString());
      addLabel(sheet, 5, row, a.toString());
+     row++;
   }
-  private int lvl = 1;
 
   protected void addHeader(WritableSheet sheet, int column, int row, String s)
           throws RowsExceededException, WriteException {
