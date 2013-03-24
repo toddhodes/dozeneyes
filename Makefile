@@ -9,7 +9,7 @@ compile:
 	javac -classpath $(COMPILE_CP) -d build/ $(SRC)
 
 run: compile
-	java -classpath $(RUNTIME_CP) org.dozeneyes.GenerateLevelRows 1: 1 2 3 4 5
+	java -classpath $(RUNTIME_CP) org.dozeneyes.GenerateLevelRows 5: 1 2 3 4 5
 
 open: run
 	open gen/*.xls
