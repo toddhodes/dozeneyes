@@ -95,10 +95,10 @@ public class GenerateLevelRows {
      Orientation o = Orientation.LEFT;
 
      // first row is each aspect at random
-     Color c = Aspect.resetColor();
-     Pattern p = Aspect.resetPattern();
-     Sound s = Aspect.resetSound();
-     Animation a = Aspect.resetAnimation();
+     Color c = Color.reset();
+     Pattern p = Pattern.reset();
+     Sound s = Sound.reset();
+     Animation a = Animation.reset();
 
      addLabel(sheet, 6, row, "complexity " + complexity);
      addRow(sheet, o, c, p, s, a);
@@ -116,10 +116,10 @@ public class GenerateLevelRows {
 
         o = (i == 0) ? Orientation.CENTER : Orientation.RIGHT;
 
-        if (isRandom.get(0)) c = Aspect.newColor();
-        if (isRandom.get(1)) p = Aspect.newPattern();
-        if (isRandom.get(2)) s = Aspect.newSound();
-        if (isRandom.get(3)) a = Aspect.newAnimation();
+        if (isRandom.get(0)) c = Color.next();
+        if (isRandom.get(1)) p = Pattern.next();
+        if (isRandom.get(2)) s = Sound.next();
+        if (isRandom.get(3)) a = Animation.next();
 
         addRow(sheet, o, c, p, s, a);
      }
