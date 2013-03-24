@@ -57,7 +57,7 @@ public class GenerateLevelRows {
   public void write(int complexity)
          throws IOException, WriteException {
     WritableSheet excelSheet = workbook.getSheet(0);
-    createContent(excelSheet, complexity);
+    complexitySelector(excelSheet, complexity);
   }
 
   protected void createFormats(WritableSheet sheet)
@@ -88,43 +88,47 @@ public class GenerateLevelRows {
     cv.setFormat(cellFormatBold);*/
   }
 
-  protected void createContent(WritableSheet sheet, int complexity)
-          throws WriteException, RowsExceededException {
-
-    complexitySelector(sheet, complexity);
-
-    for (int i = 1; i < 10; i++) {
-      addNumber(sheet, 0, i, i);
-      addNumber(sheet, 1, i, i * i);
-      addLabel(sheet, 6, i, "complexity " + complexity);
-    }
-  }
 
   // "Level", "Orientation", "Color", "Pattern", "Sound", "Animation"
   protected void complexitySelector(WritableSheet sheet, int complexity)
-            throws WriteException, RowsExceededException {
-     switch (complexity) {
-        case 1:
-         // 1 - randomly selects one state for all 4 aspects.
-         Orientation o = Orientation.values()[random.nextInt(3)];
-         Color c = Color.values()[random.nextInt(3)];
-         Pattern p = Pattern.values()[random.nextInt(3)];
-         Sound s = Sound.values()[random.nextInt(3)];
-         Animation a = Animation.values()[random.nextInt(3)];
-         addRow(sheet, o, c, p, s, a);
-         addRow(sheet, o, c, p, s, a);
-         addRow(sheet, o, c, p, s, a);
-        case 2:
-         // 2 - randomly selects three states for 1 aspect and one state for 3 aspect
-         //     (randomly picking which aspect to bestow 3 on)
-        case 3:
-         // 3 - randomly selects two states for 1 aspect  and two  states for 2 aspects.
-        case 4:
-         // 4 - randomly selects one state for 1 aspect and three states for 3 aspects.
+     throws WriteException, RowsExceededException {
+
+     Orientation o = Orientation.LEFT;
+
+     Color c = Color.values()[random.nextInt(3)];
+     Pattern p = Pattern.values()[random.nextInt(3)];
+     Sound s = Sound.values()[random.nextInt(3)];
+     Animation a = Animation.values()[random.nextInt(3)];
+
+     // first row is completely random
+     addRow(sheet, o, c, p, s, a);
+
+     // for rows two and three...
+     for (int i=0; i < 2; i++) {
+
+        o = (i == 0) ? Orientation.CENTER : Orientation.RIGHT;
+
+        switch (complexity) {
         case 5:
-         // 5 - randomly selects three states for all 4 aspects.
+           // 5 - randomly selects three states for all 4 aspects.
+           c = Color.values()[random.nextInt(3)];
+        case 4:
+           // 4 - randomly selects one state for 1 aspect and three states for 3 aspects.
+           p = Pattern.values()[random.nextInt(3)];
+        case 3:
+           // 3 - randomly selects two states for 1 aspect  and two  states for 2 aspects.
+           s = Sound.values()[random.nextInt(3)];
+        case 2:
+           // 2 - randomly selects three states for 1 aspect and one state for 3 aspect
+           //     (randomly picking which aspect to bestow 3 on)
+           a = Animation.values()[random.nextInt(3)];
+        case 1:
+           // 1 - randomly selects one state for all 4 aspects.
+           break;
         default:
-          log.e("bad complexity");
+           log.e("bad complexity");
+        }
+        addRow(sheet, o, c, p, s, a);
      }
   }
 
@@ -132,14 +136,14 @@ public class GenerateLevelRows {
                         Orientation o, Color c, Pattern p, Sound s, Animation a)
           throws WriteException, RowsExceededException {
      int row = lvl;
-     addLabel(sheet, 0, row, "" + ++lvl);
+     addLabel(sheet, 0, row, "" + lvl++);
      addLabel(sheet, 1, row, o.toString());
      addLabel(sheet, 2, row, c.toString());
      addLabel(sheet, 3, row, p.toString());
      addLabel(sheet, 4, row, s.toString());
      addLabel(sheet, 5, row, a.toString());
   }
-  private int lvl = 0;
+  private int lvl = 1;
 
   protected void addHeader(WritableSheet sheet, int column, int row, String s)
           throws RowsExceededException, WriteException {
