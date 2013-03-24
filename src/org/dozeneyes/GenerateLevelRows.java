@@ -23,8 +23,9 @@ import org.dozeneyes.aspect.*;
 
 public class GenerateLevelRows {
 
-  protected static final int FONT_SIZE = 10;
   protected static Logger log = new Logger(GenerateLevelRows.class);
+
+  protected static final int FONT_SIZE = 10;
 
   protected WritableWorkbook workbook;
   protected WritableCellFormat cellFormat;
@@ -60,17 +61,17 @@ public class GenerateLevelRows {
 
   protected void createFormats(WritableSheet sheet) throws WriteException {
 
-    // cell format
+    // cell formats
     WritableFont cellFont = new WritableFont(WritableFont.ARIAL, FONT_SIZE);
     cellFormat = new WritableCellFormat(cellFont);
     cellFormat.setWrap(false);
 
-    // header
     WritableFont headerFont =
        new WritableFont(WritableFont.ARIAL, FONT_SIZE, WritableFont.BOLD, false);
     cellFormatBold = new WritableCellFormat(headerFont);
     cellFormatBold.setWrap(false);
 
+    // header
     String[] headers = {
        "Level", "Orientation", "Color", "Pattern", "Sound", "Animation"
     };
@@ -78,11 +79,6 @@ public class GenerateLevelRows {
        sheet.getColumnView(i).setSize(256*50);
        addHeader(sheet, i, 0, headers[i]);
     }
-
-    /*CellView cv = new CellView();
-    cv.setAutosize(true);
-    cv.setFormat(cellFormat);
-    cv.setFormat(cellFormatBold);*/
   }
 
 
@@ -91,10 +87,10 @@ public class GenerateLevelRows {
 
      Orientation o = Orientation.LEFT;
 
-     Color c = Aspect.newColor();
-     Pattern p = Aspect.newPattern();
-     Sound s = Aspect.newSound();
-     Animation a = Aspect.newAnimation();
+     Color c = Aspect.resetColor();
+     Pattern p = Aspect.resetPattern();
+     Sound s = Aspect.resetSound();
+     Animation a = Aspect.resetAnimation();
 
      // first row is completely random
      addLabel(sheet, 6, row, "complexity " + complexity);

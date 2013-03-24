@@ -1,4 +1,4 @@
-.PHONY: all, compile, run, open
+.PHONY: all, compile, run, open, clean
 
 SRC := ./src/org/dozeneyes/*.java ./src/org/dozeneyes/aspect/*.java
 
@@ -13,5 +13,8 @@ run: compile
 
 open: run
 	open gen/*.xls
+
+clean:
+	rm -rf build ; mkdir build
 
 all: compile, run, open

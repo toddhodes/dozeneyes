@@ -20,7 +20,6 @@ to run and open the xls:
 
 
 TODO:
-- better randomization; it seems to oddly suck by default w/ Random.nextInt(3)
 - fill in levels
 - randomize Orientation
 
