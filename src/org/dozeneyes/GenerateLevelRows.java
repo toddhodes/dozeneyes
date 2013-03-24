@@ -2,6 +2,10 @@ package org.dozeneyes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -87,40 +91,33 @@ public class GenerateLevelRows {
 
      Orientation o = Orientation.LEFT;
 
+     // first row is each aspect at random
      Color c = Aspect.resetColor();
      Pattern p = Aspect.resetPattern();
      Sound s = Aspect.resetSound();
      Animation a = Aspect.resetAnimation();
 
-     // first row is completely random
      addLabel(sheet, 6, row, "complexity " + complexity);
      addRow(sheet, o, c, p, s, a);
+
+     // the, choose which aspects to further randomize
+     List<Boolean> isRandom =
+        Arrays.asList(new Boolean[] { false, false, false, false });
+     for (int i=0; i < 4; i++) {
+       isRandom.set(i, i+1 < complexity);
+     }
+     Collections.shuffle(isRandom, random);
 
      // for rows two and three...
      for (int i=0; i < 2; i++) {
 
         o = (i == 0) ? Orientation.CENTER : Orientation.RIGHT;
 
-        switch (complexity) {
-        case 5:
-           // 5 - randomly selects three states for all 4 aspects.
-           c = Aspect.newColor();
-        case 4:
-           // 4 - randomly selects one state for 1 aspect and three states for 3 aspects.
-           p = Aspect.newPattern();
-        case 3:
-           // 3 - randomly selects two states for 1 aspect  and two  states for 2 aspects.
-           s = Aspect.newSound();
-        case 2:
-           // 2 - randomly selects three states for 1 aspect and one state for 3 aspect
-           //     (randomly picking which aspect to bestow 3 on)
-           a = Aspect.newAnimation();
-        case 1:
-           // 1 - randomly selects one state for all 4 aspects.
-           break;
-        default:
-           log.e("bad complexity");
-        }
+        if (isRandom.get(0)) c = Aspect.newColor();
+        if (isRandom.get(1)) p = Aspect.newPattern();
+        if (isRandom.get(2)) s = Aspect.newSound();
+        if (isRandom.get(3)) a = Aspect.newAnimation();
+
         addRow(sheet, o, c, p, s, a);
      }
   }
