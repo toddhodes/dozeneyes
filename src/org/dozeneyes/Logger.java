@@ -16,6 +16,10 @@ public class Logger {
     doLog(args, "DEBUG");
   }
 
+  public void i(String args) {
+    doLog(args, "INFO");
+  }
+
   public void e(String args) {
     doLog(args, "ERROR");
   }
