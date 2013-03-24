@@ -130,11 +130,11 @@ public class GenerateLevelRows {
      throws WriteException, RowsExceededException {
 
      addLabel(sheet, 0, row, level);
-     addLabel(sheet, 1, row, o.toString());
-     addLabel(sheet, 2, row, c.toString());
-     addLabel(sheet, 3, row, p.toString());
-     addLabel(sheet, 4, row, s.toString());
-     addLabel(sheet, 5, row, a.toString());
+     addLabel(sheet, 1, row, o + " " + o.ordinal());
+     addLabel(sheet, 2, row, c + " " + c.ordinal());
+     addLabel(sheet, 3, row, p + " " + p.ordinal());
+     addLabel(sheet, 4, row, s + " " + s.ordinal());
+     addLabel(sheet, 5, row, a + " " + a.ordinal());
      row++;
   }
 
