@@ -1,12 +1,9 @@
-case "$1" in
-"") echo "usage $0 [list of complexities, each from 1-5]" 
-    echo "e.g.: $0 1 1 2 2 3 3 4 4 5 5"
-    exit 1 
-;;
-esac
 
 RUNTIME_CP=build:lib/jexcelapi/jxl.jar 
 
 java -classpath $RUNTIME_CP org.dozeneyes.GenerateLevelRows "$@"
 
-open gen/levels.xls
+if [ $? = 0 ]
+then
+  open gen/levels.xls
+fi

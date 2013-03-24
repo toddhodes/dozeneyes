@@ -37,8 +37,11 @@ public class GenerateLevelRows {
   protected Random random = new Random();
 
   private int row = 1;
+  private String level = "[level]";
 
-  public GenerateLevelRows() { }
+  public GenerateLevelRows(String level) {
+     this.level = level;
+  }
 
 
   public void createWorkbook(String outputFile) throws IOException, WriteException {
@@ -126,7 +129,7 @@ public class GenerateLevelRows {
                         Orientation o, Color c, Pattern p, Sound s, Animation a)
      throws WriteException, RowsExceededException {
 
-     addLabel(sheet, 0, row, "[lvl#]");
+     addLabel(sheet, 0, row, level);
      addLabel(sheet, 1, row, o.toString());
      addLabel(sheet, 2, row, c.toString());
      addLabel(sheet, 3, row, p.toString());
@@ -156,10 +159,18 @@ public class GenerateLevelRows {
 
 
   public static void main(String[] args) throws WriteException, IOException {
-    GenerateLevelRows main = new GenerateLevelRows();
+
+    if (args.length < 2) {
+       System.err.println("Usage: $0 [list of complexities, each from 1-5]");
+       System.err.println("e.g.: $0 3: 1 1 2 2 3 3 4 4 5 5");
+       System.exit(1);
+    }
+
+    GenerateLevelRows main = new GenerateLevelRows(args[0].replace(":",""));
     String fn = "gen/levels.xls";
     main.createWorkbook(fn);
-    for (int i=0; i < args.length; i++) {
+
+    for (int i=1; i < args.length; i++) {
         try {
            int complexity = Integer.parseInt(args[i]);
            log.d("generate " + complexity);
