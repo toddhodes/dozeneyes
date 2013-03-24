@@ -17,7 +17,7 @@ public class Logger {
   }
 
   public void i(String args) {
-    doLog(args, "INFO");
+    doLog(args, " INFO");
   }
 
   public void e(String args) {
@@ -25,7 +25,8 @@ public class Logger {
   }
 
   protected void doLog(String args, String level) {
-    System.out.println(new Date() + " " + component + " " + level +" " + args);
+    System.out.println(new Date() + " | " + component + " | "
+                       + level + " | " + args);
   }
 
 }
